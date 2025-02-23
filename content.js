@@ -125,34 +125,39 @@ function initTextAreas(root = document) {
     });
 }
   
-// Simulation d'API IA (à remplacer)
+// ... (le reste du code reste identique jusqu'à getAISuggestion)
+
 async function getAISuggestion(prompt) {
-    // Exemple avec OpenAI (à remplacer par votre clé API)
-    /*
-    const response = await fetch('https://api.openai.com/v1/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer YOUR_API_KEY',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: "text-davinci-003",
-        prompt: prompt,
-        max_tokens: 20,
-        temperature: 0.7
-      })
-    });
-    return (await response.json()).choices[0].text;
-    */
-    
-    // Simulation locale
-    const completions = {
-      "Bonjour, comment": "allez-vous ?",
-      "Je vais au": "marché ce matin",
-      "Le temps est": "magnifique aujourd'hui"
-    };
-    return completions[prompt] || '';
+    const API_KEY = "YOUR KEY"; 
+
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: [{ 
+                    role: "user", 
+                    content: prompt 
+                }],
+                max_tokens: 20,
+                temperature: 0.7
+            })
+        });
+
+        const data = await response.json();
+        return data.choices[0].message.content;
+
+    } catch (error) {
+        console.error('Erreur API:', error);
+        return '';
+    }
 }
+
+  
   
 // Démarrage de l'extension
 document.addEventListener('DOMContentLoaded', init);
