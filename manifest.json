@@ -1,13 +1,11 @@
 {
-    "manifest_version": 3,
-    "name": "AI Autocomplete",
-    "version": "1.0",
-    "permissions": ["activeTab", "scripting"],
-    "content_scripts": [{
-      "matches": ["<all_urls>"],
-      "css": ["overlay.css"],
-      "js": ["content.js"],
-      "run_at": "document_end"
-    }]
-
-  }
+  "manifest_version": 3,
+  "name": "AI Autocomplete",
+  "version": "1.0",
+  "host_permissions": ["https://api.openai.com/*"],
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "css": ["overlay.css"],
+    "js": ["content.js"]
+  }]
+}
